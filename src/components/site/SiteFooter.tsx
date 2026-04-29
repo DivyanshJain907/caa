@@ -27,7 +27,11 @@ export default function SiteFooter() {
           </span>
           <div className="flex flex-col gap-2 text-sm text-slate-600">
             {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="hover:text-navy-900">
+              <Link
+                key={item.href}
+                href={item.href}
+                className="hover:text-navy-900"
+              >
                 {item.label}
               </Link>
             ))}
@@ -54,8 +58,21 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/60 py-4 text-center text-xs text-slate-500">
-        Copyright 2026 Ajit Agarwal & Associates. All rights reserved.
+      <div className="border-t border-white/60 py-4">
+        <div className="text-center text-xs text-slate-500 mb-2">
+          Copyright 2026 Ajit Agarwal & Associates. All rights reserved.
+        </div>
+        <div className="text-center text-xs text-slate-500">
+          Developed by{" "}
+          <a
+            href="https://thejainagency.shop"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-navy-900 hover:text-gold transition font-semibold"
+          >
+            The Jain Agency
+          </a>
+        </div>
       </div>
     </footer>
   );
