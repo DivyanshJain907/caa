@@ -5,8 +5,8 @@ import GalleryItem from "@/lib/models/GalleryItem";
 import Certificate from "@/lib/models/Certificate";
 import Career from "@/lib/models/Career";
 
-function toPlain<T extends { _id: { toString: () => string } }>(doc: T) {
-  return { ...doc, _id: doc._id.toString() };
+function toPlain<T extends { _id: any }>(doc: T) {
+  return { ...doc, _id: doc._id.toString() } as T & { _id: string };
 }
 
 export async function getServices() {
