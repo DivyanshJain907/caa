@@ -63,6 +63,17 @@ export default async function AdminTeamPage() {
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-xs font-semibold text-navy-900">
+            About (optional)
+          </label>
+          <textarea
+            name="about"
+            placeholder="Brief bio or about information"
+            rows={3}
+            className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-semibold text-navy-900">
             Upload Image (optional)
           </label>
           <FileUploader name="image" />
@@ -115,6 +126,18 @@ export default async function AdminTeamPage() {
                   name="specialization"
                   defaultValue={member.specialization}
                   placeholder="Specialization"
+                  className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-semibold text-navy-900">
+                  About (optional)
+                </label>
+                <textarea
+                  name="about"
+                  defaultValue={member.about || ""}
+                  placeholder="Brief bio or about information"
+                  rows={3}
                   className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
                 />
               </div>

@@ -6,7 +6,7 @@ import AdminLoginForm from "@/components/admin/AdminLoginForm";
 export default async function AdminLoginPage({
   searchParams,
 }: {
-  searchParams?: { callbackUrl?: string };
+  searchParams?: Promise<{ callbackUrl?: string }>;
 }) {
   const session = await getServerSession(authOptions);
 
@@ -14,7 +14,8 @@ export default async function AdminLoginPage({
     redirect("/admin/dashboard");
   }
 
-  const callbackUrl = searchParams?.callbackUrl || "/admin/dashboard";
+  const params = await searchParams;
+  const callbackUrl = params?.callbackUrl || "/admin/dashboard";
 
   return <AdminLoginForm callbackUrl={callbackUrl} />;
 }
