@@ -4,12 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await dbConnect();
+    const { id } = await params;
 
-    const image = await Image.findById(params.id);
+    const image = await Image.findById(id);
     if (!image) {
       return NextResponse.json({ error: "Image not found" }, { status: 404 });
     }
