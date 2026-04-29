@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
 
 import {
@@ -27,7 +28,7 @@ interface MenuItem {
   title: string;
   url: string;
   description?: string;
-  icon?: JSX.Element;
+  icon?: React.ReactNode;
   items?: MenuItem[];
 }
 

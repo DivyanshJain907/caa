@@ -43,7 +43,7 @@ export const authOptions: AuthOptions = {
           await ensureAdminIfMissing(envEmail, envPassword);
         }
 
-        const user = await User.findOne({ email: credentials.email }).lean();
+        const user: any = await User.findOne({ email: credentials.email }).lean();
         if (!user) {
           return null;
         }

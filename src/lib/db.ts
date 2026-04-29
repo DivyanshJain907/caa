@@ -26,7 +26,7 @@ export async function dbConnect() {
   }
 
   if (!globalCache.promise) {
-    globalCache.promise = mongoose.connect(MONGODB_URI, {
+    globalCache.promise = mongoose.connect(MONGODB_URI as string, {
       bufferCommands: false,
     });
   }

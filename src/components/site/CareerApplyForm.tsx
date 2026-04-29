@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 import { applyCareer } from "@/app/(site)/actions";
 
 const initialState = {
-  status: "idle",
+  status: "idle" as const,
   message: "",
 };
 
