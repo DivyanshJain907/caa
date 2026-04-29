@@ -5,8 +5,8 @@ import { dbConnect } from "@/lib/db";
 import User from "@/lib/models/User";
 
 async function ensureAdminIfMissing(email: string, password: string) {
-  const existing = await User.countDocuments();
-  if (existing > 0) {
+  const existingAdmin = await User.findOne({ email }).lean();
+  if (existingAdmin) {
     return;
   }
 
@@ -43,14 +43,16 @@ export const authOptions: AuthOptions = {
           await ensureAdminIfMissing(envEmail, envPassword);
         }
 
-        const user: any = await User.findOne({ email: credentials.email }).lean();
+        const user: any = await User.findOne({
+          email: credentials.email,
+        }).lean();
         if (!user) {
           return null;
         }
 
         const isValid = await bcrypt.compare(
           credentials.password,
-          user.passwordHash
+          user.passwordHash,
         );
         if (!isValid) {
           return null;
