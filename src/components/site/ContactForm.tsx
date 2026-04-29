@@ -33,6 +33,7 @@ export default function ContactForm() {
           <label className="text-xs font-semibold text-navy-900">Name</label>
           <input
             name="name"
+            placeholder="Your name"
             required
             className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm"
           />
@@ -42,6 +43,7 @@ export default function ContactForm() {
           <input
             name="email"
             type="email"
+            placeholder="your@email.com"
             required
             className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm"
           />
@@ -52,6 +54,7 @@ export default function ContactForm() {
           <label className="text-xs font-semibold text-navy-900">Phone</label>
           <input
             name="phone"
+            placeholder="Phone number"
             className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm"
           />
         </div>
@@ -59,6 +62,7 @@ export default function ContactForm() {
           <label className="text-xs font-semibold text-navy-900">Subject</label>
           <input
             name="subject"
+            placeholder="Inquiry subject"
             className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm"
           />
         </div>
@@ -67,6 +71,7 @@ export default function ContactForm() {
         <label className="text-xs font-semibold text-navy-900">Message</label>
         <textarea
           name="message"
+          placeholder="Your message or inquiry details"
           rows={4}
           required
           className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm"

@@ -9,7 +9,13 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET || "replace-with-a-secure-secret" });
+  const secret = process.env.NEXTAUTH_SECRET;
+  if (!secret) {
+    console.warn("NEXTAUTH_SECRET is not set. Skipping authentication check.");
+    return NextResponse.next();
+  }
+
+  const token = await getToken({ req, secret });
   if (!token) {
     const loginUrl = new URL("/admin/login", req.url);
     loginUrl.searchParams.set("callbackUrl", req.url);

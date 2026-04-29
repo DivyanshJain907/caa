@@ -1,4 +1,5 @@
 import SectionHeading from "@/components/site/SectionHeading";
+import ServiceModal from "@/components/site/ServiceModal";
 import { defaultServices } from "@/lib/defaults";
 import { getServices } from "@/lib/queries";
 
@@ -15,11 +16,14 @@ export default async function ServicesPage() {
   const services = (await getServices()) as unknown as ServiceItem[];
   const items: ServiceItem[] = services.length > 0 ? services : defaultServices;
 
-  const grouped = items.reduce<Record<string, ServiceItem[]>>((acc, service) => {
-    acc[service.category] = acc[service.category] || [];
-    acc[service.category].push(service);
-    return acc;
-  }, {});
+  const grouped = items.reduce<Record<string, ServiceItem[]>>(
+    (acc, service) => {
+      acc[service.category] = acc[service.category] || [];
+      acc[service.category].push(service);
+      return acc;
+    },
+    {},
+  );
 
   return (
     <div className="section-space">
@@ -38,17 +42,16 @@ export default async function ServicesPage() {
               </div>
               <div className="grid gap-6 md:grid-cols-2">
                 {services.map((service) => (
-                  <div
-                    key={service.title}
-                    className="glass-panel flex flex-col gap-4 rounded-3xl p-6"
-                  >
-                    <div className="text-lg font-semibold text-navy-900">
-                      {service.title}
+                  <ServiceModal key={service.title} service={service}>
+                    <div className="glass-panel flex flex-col gap-4 rounded-3xl p-6">
+                      <div className="text-lg font-semibold text-navy-900">
+                        {service.title}
+                      </div>
+                      <p className="text-sm text-slate-600">
+                        {service.description}
+                      </p>
                     </div>
-                    <p className="text-sm text-slate-600">
-                      {service.description}
-                    </p>
-                  </div>
+                  </ServiceModal>
                 ))}
               </div>
             </div>

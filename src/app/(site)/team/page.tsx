@@ -1,4 +1,5 @@
 import SectionHeading from "@/components/site/SectionHeading";
+import ProfileModal from "@/components/site/ProfileModal";
 import { defaultTeam } from "@/lib/defaults";
 import { getTeam } from "@/lib/queries";
 
@@ -27,33 +28,41 @@ export default async function TeamPage() {
         />
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {members.map((member) => (
-            <div
+            <ProfileModal
               key={member.name}
-              className="glass-panel flex flex-col gap-4 rounded-3xl p-6"
+              profile={{
+                name: member.name,
+                role: member.role,
+                specialization: member.specialization,
+                about: member.about,
+                imageUrl: member.imageUrl,
+              }}
             >
-              {member.imageUrl ? (
-                <img
-                  src={member.imageUrl}
-                  alt={member.name}
-                  className="h-40 w-full rounded-2xl object-cover"
-                />
-              ) : (
-                <div className="flex h-40 w-full items-center justify-center rounded-2xl bg-navy-900 text-2xl font-semibold text-ivory">
-                  {initials(member.name)}
+              <div className="glass-panel flex flex-col gap-4 rounded-3xl p-6">
+                {member.imageUrl ? (
+                  <img
+                    src={member.imageUrl}
+                    alt={member.name}
+                    className="h-40 w-full rounded-2xl object-cover"
+                  />
+                ) : (
+                  <div className="flex h-40 w-full items-center justify-center rounded-2xl bg-navy-900 text-2xl font-semibold text-ivory">
+                    {initials(member.name)}
+                  </div>
+                )}
+                <div>
+                  <div className="text-base font-semibold text-navy-900">
+                    {member.name}
+                  </div>
+                  <div className="text-xs uppercase tracking-[0.2em] text-gold">
+                    {member.role}
+                  </div>
                 </div>
-              )}
-              <div>
-                <div className="text-base font-semibold text-navy-900">
-                  {member.name}
-                </div>
-                <div className="text-xs uppercase tracking-[0.2em] text-gold">
-                  {member.role}
-                </div>
+                <p className="text-sm text-slate-600">
+                  {member.specialization}
+                </p>
               </div>
-              <p className="text-sm text-slate-600">
-                {member.specialization}
-              </p>
-            </div>
+            </ProfileModal>
           ))}
         </div>
       </div>

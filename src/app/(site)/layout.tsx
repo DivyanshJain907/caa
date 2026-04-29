@@ -1,6 +1,5 @@
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
-import WhatsAppButton from "@/components/site/WhatsAppButton";
 
 export default function SiteLayout({
   children,
@@ -12,7 +11,6 @@ export default function SiteLayout({
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
-      <WhatsAppButton />
     </div>
   );
 }

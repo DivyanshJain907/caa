@@ -152,8 +152,14 @@ const Navbar1 = ({
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="h-12 w-auto object-contain" alt={logo.alt} />
-              {logo.title && <span className="text-lg font-semibold">{logo.title}</span>}
+              <img
+                src={logo.src}
+                className="h-12 w-auto object-contain"
+                alt={logo.alt}
+              />
+              {logo.title && (
+                <span className="text-lg font-semibold">{logo.title}</span>
+              )}
             </a>
             <div className="flex items-center">
               <NavigationMenu>
@@ -170,7 +176,11 @@ const Navbar1 = ({
               </Button>
             )}
             {auth?.signup?.text && (
-              <Button asChild size="default" className="bg-navy-900 text-white font-bold hover:bg-navy-800 shadow-md">
+              <Button
+                asChild
+                size="default"
+                className="bg-navy-900 text-white font-bold hover:bg-navy-800 shadow-md"
+              >
                 <a href={auth.signup.url}>{auth.signup.text}</a>
               </Button>
             )}
@@ -179,8 +189,14 @@ const Navbar1 = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             <a href={logo.url} className="flex items-center gap-2">
-              <img src={logo.src} className="h-10 w-auto object-contain" alt={logo.alt} />
-              {logo.title && <span className="text-lg font-semibold">{logo.title}</span>}
+              <img
+                src={logo.src}
+                className="h-10 w-auto object-contain"
+                alt={logo.alt}
+              />
+              {logo.title && (
+                <span className="text-lg font-semibold">{logo.title}</span>
+              )}
             </a>
             <Sheet>
               <SheetTrigger asChild>
@@ -192,7 +208,11 @@ const Navbar1 = ({
                 <SheetHeader className="text-left">
                   <SheetTitle>
                     <a href={logo.url} className="flex items-center gap-2">
-                      <img src={logo.src} className="h-10 w-auto object-contain" alt={logo.alt} />
+                      <img
+                        src={logo.src}
+                        className="h-10 w-auto object-contain"
+                        alt={logo.alt}
+                      />
                       {logo.title && (
                         <span className="text-lg font-semibold">
                           {logo.title}
@@ -226,12 +246,19 @@ const Navbar1 = ({
                   )}
                   <div className="flex flex-col gap-3 mt-6">
                     {auth?.login?.text && (
-                      <Button asChild variant="outline" className="w-full text-base h-12">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="w-full text-base h-12"
+                      >
                         <a href={auth.login.url}>{auth.login.text}</a>
                       </Button>
                     )}
                     {auth?.signup?.text && (
-                      <Button asChild className="w-full text-base h-12 bg-navy-900 text-white font-bold hover:bg-navy-800 shadow-md">
+                      <Button
+                        asChild
+                        className="w-full text-base h-12 bg-navy-900 text-white font-bold hover:bg-navy-800 shadow-md"
+                      >
                         <a href={auth.signup.url}>{auth.signup.text}</a>
                       </Button>
                     )}
@@ -249,35 +276,36 @@ const Navbar1 = ({
 const renderMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
-      <NavigationMenuItem key={item.title} className="">
-        <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+      <NavigationMenuItem key={item.title}>
+        <NavigationMenuTrigger className="font-medium text-slate-600 hover:text-navy-900">
+          {item.title}
+        </NavigationMenuTrigger>
         <NavigationMenuContent>
-          <ul className="w-80 p-3">
-            <NavigationMenuLink asChild>
-              <div>
+          <div className="w-96 p-4">
+            <div className="grid gap-3">
               {item.items.map((subItem) => (
-                <li key={subItem.title}>
-                  <a
-                    className="flex select-none gap-4 rounded-md p-3 leading-none bg-white no-underline outline-none transition-colors hover:bg-slate-100 hover:text-navy-900"
-                    href={subItem.url}
-                  >
+                <a
+                  key={subItem.title}
+                  className="flex gap-3 rounded-lg p-3 leading-none bg-white no-underline outline-none transition-colors hover:bg-slate-50 hover:text-navy-900 border border-transparent hover:border-slate-200 group"
+                  href={subItem.url}
+                >
+                  <div className="shrink-0 text-slate-400 group-hover:text-gold">
                     {subItem.icon}
-                    <div>
-                      <div className="text-sm font-semibold">
-                        {subItem.title}
-                      </div>
-                      {subItem.description && (
-                        <p className="text-sm leading-snug text-slate-600">
-                          {subItem.description}
-                        </p>
-                      )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-sm font-semibold text-navy-900">
+                      {subItem.title}
                     </div>
-                  </a>
-                </li>
+                    {subItem.description && (
+                      <p className="text-xs leading-snug text-slate-600 mt-1">
+                        {subItem.description}
+                      </p>
+                    )}
+                  </div>
+                </a>
               ))}
-              </div>
-            </NavigationMenuLink>
-          </ul>
+            </div>
+          </div>
         </NavigationMenuContent>
       </NavigationMenuItem>
     );
@@ -286,7 +314,7 @@ const renderMenuItem = (item: MenuItem) => {
   return (
     <a
       key={item.title}
-      className="group inline-flex h-10 w-max items-center justify-center rounded-md  px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-navy-900"
+      className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-navy-900"
       href={item.url}
     >
       {item.title}
@@ -325,7 +353,11 @@ const renderMobileMenuItem = (item: MenuItem) => {
   }
 
   return (
-    <a key={item.title} href={item.url} className="font-semibold block py-2 text-lg">
+    <a
+      key={item.title}
+      href={item.url}
+      className="font-semibold block py-2 text-lg"
+    >
       {item.title}
     </a>
   );
