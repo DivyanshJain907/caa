@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type AdminLoginFormProps = {
   callbackUrl: string;
@@ -16,6 +17,8 @@ export default function AdminLoginForm({ callbackUrl }: AdminLoginFormProps) {
     event.preventDefault();
     setError(null);
 
+    const loadingToast = toast.loading("Signing in...");
+
     const formData = new FormData(event.currentTarget);
     const email = String(formData.get("email") || "");
     const password = String(formData.get("password") || "");
@@ -28,9 +31,14 @@ export default function AdminLoginForm({ callbackUrl }: AdminLoginFormProps) {
     });
 
     if (result?.error || !result?.ok) {
+      toast.error("Invalid credentials. Please try again.", {
+        id: loadingToast,
+      });
       setError("Invalid credentials. Please try again.");
       return;
     }
+
+    toast.success("Signed in successfully.", { id: loadingToast });
 
     router.replace(result.url || callbackUrl);
     router.refresh();

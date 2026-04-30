@@ -7,6 +7,8 @@ import {
 import { dbConnect } from "@/lib/db";
 import TeamMember from "@/lib/models/TeamMember";
 import FileUploader from "@/components/ui/FileUploader";
+import AdminSubmitButton from "@/components/admin/AdminSubmitButton";
+import AdminDeleteForm from "@/components/admin/AdminDeleteForm";
 
 export const dynamic = "force-dynamic";
 
@@ -78,12 +80,13 @@ export default async function AdminTeamPage() {
           </label>
           <FileUploader name="image" />
         </div>
-        <button
-          type="submit"
-          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+        <AdminSubmitButton
+          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+          pendingLabel="Adding..."
+          successLabel="Team member added."
         >
           Add Team Member
-        </button>
+        </AdminSubmitButton>
       </form>
 
       <div className="grid gap-6">
@@ -145,24 +148,27 @@ export default async function AdminTeamPage() {
                 <label className="text-xs font-semibold text-navy-900">
                   Replace Image
                 </label>
-                <FileUploader name="image" />
+                <FileUploader
+                  name="image"
+                  defaultImageUrl={member.imageUrl || null}
+                />
               </div>
-              <button
-                type="submit"
-                className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+              <AdminSubmitButton
+                className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+                pendingLabel="Saving..."
+                successLabel="Team member updated."
               >
                 Save Changes
-              </button>
+              </AdminSubmitButton>
             </form>
-            <form action={deleteTeamMember} className="mt-4">
-              <input type="hidden" name="id" value={member._id.toString()} />
-              <button
-                type="submit"
-                className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600"
-              >
-                Delete Member
-              </button>
-            </form>
+            <AdminDeleteForm
+              action={deleteTeamMember}
+              id={member._id.toString()}
+              buttonLabel="Delete Member"
+              pendingLabel="Deleting..."
+              successLabel="Team member deleted."
+              className="mt-4"
+            />
           </div>
         ))}
         {team.length === 0 ? (

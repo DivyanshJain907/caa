@@ -17,6 +17,10 @@ export default function SiteHeader() {
         url: "/",
       },
       {
+        title: "About",
+        url: "/about",
+      },
+      {
         title: "Services",
         url: "/services",
         items: [
@@ -47,7 +51,7 @@ export default function SiteHeader() {
       {
         title: "Contact",
         url: "/contact",
-      }
+      },
     ],
     mobileExtraLinks: [],
     auth: {
