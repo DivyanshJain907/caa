@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import AdminTopbar from "@/components/admin/AdminTopbar";
 import { authOptions } from "@/lib/auth";
+import { Toaster } from "sonner";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,7 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <Toaster position="top-right" richColors closeButton />
       {session?.user ? (
         <div className="flex">
           <AdminSidebar />

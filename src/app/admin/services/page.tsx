@@ -7,6 +7,8 @@ import {
 import { dbConnect } from "@/lib/db";
 import Service from "@/lib/models/Service";
 import FileUploader from "@/components/ui/FileUploader";
+import AdminSubmitButton from "@/components/admin/AdminSubmitButton";
+import AdminDeleteForm from "@/components/admin/AdminDeleteForm";
 
 export const dynamic = "force-dynamic";
 
@@ -70,12 +72,13 @@ export default async function AdminServicesPage() {
           </label>
           <FileUploader name="image" />
         </div>
-        <button
-          type="submit"
-          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+        <AdminSubmitButton
+          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+          pendingLabel="Adding..."
+          successLabel="Service added."
         >
           Add Service
-        </button>
+        </AdminSubmitButton>
       </form>
 
       <div className="grid gap-6">
@@ -128,22 +131,22 @@ export default async function AdminServicesPage() {
                 </label>
                 <FileUploader name="image" />
               </div>
-              <button
-                type="submit"
-                className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+              <AdminSubmitButton
+                className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+                pendingLabel="Saving..."
+                successLabel="Service updated."
               >
                 Save Changes
-              </button>
+              </AdminSubmitButton>
             </form>
-            <form action={deleteService} className="mt-4">
-              <input type="hidden" name="id" value={service._id.toString()} />
-              <button
-                type="submit"
-                className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600"
-              >
-                Delete Service
-              </button>
-            </form>
+            <AdminDeleteForm
+              action={deleteService}
+              id={service._id.toString()}
+              buttonLabel="Delete Service"
+              pendingLabel="Deleting..."
+              successLabel="Service deleted."
+              className="mt-4"
+            />
           </div>
         ))}
         {services.length === 0 ? (

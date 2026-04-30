@@ -6,6 +6,8 @@ import {
 } from "@/app/admin/actions";
 import { dbConnect } from "@/lib/db";
 import Career from "@/lib/models/Career";
+import AdminSubmitButton from "@/components/admin/AdminSubmitButton";
+import AdminDeleteForm from "@/components/admin/AdminDeleteForm";
 
 export const dynamic = "force-dynamic";
 
@@ -32,68 +34,149 @@ export default async function AdminCareersPage() {
         </p>
       </div>
 
-      <form action={createCareer} className="grid gap-4 rounded-3xl bg-white p-6 shadow-sm">
+      <form
+        action={createCareer}
+        className="grid gap-4 rounded-3xl bg-white p-6 shadow-sm"
+      >
         <div className="grid gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <label className="text-xs font-semibold text-navy-900">Title</label>
-            <input name="title" required className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+            <input
+              name="title"
+              required
+              placeholder="Job title"
+              className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+            />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold text-navy-900">Location</label>
-            <input name="location" required className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+            <label className="text-xs font-semibold text-navy-900">
+              Location
+            </label>
+            <input
+              name="location"
+              required
+              placeholder="Location"
+              className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+            />
           </div>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <label className="text-xs font-semibold text-navy-900">Type</label>
-            <input name="type" required className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+            <input
+              name="type"
+              required
+              placeholder="Full-time, part-time, etc."
+              className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+            />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-semibold text-navy-900">Experience</label>
-            <input name="experience" className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+            <label className="text-xs font-semibold text-navy-900">
+              Experience
+            </label>
+            <input
+              name="experience"
+              placeholder="Years of experience"
+              className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+            />
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold text-navy-900">Description</label>
-          <textarea name="description" rows={3} required className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+          <label className="text-xs font-semibold text-navy-900">
+            Description
+          </label>
+          <textarea
+            name="description"
+            rows={3}
+            required
+            placeholder="Short job description"
+            className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+          />
         </div>
-        <button type="submit" className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory">
+        <AdminSubmitButton
+          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+          pendingLabel="Adding..."
+          successLabel="Job opening added."
+        >
           Add Job Opening
-        </button>
+        </AdminSubmitButton>
       </form>
 
       <div className="grid gap-6">
         {careers.map((career) => (
-          <div key={career._id.toString()} className="rounded-3xl bg-white p-6 shadow-sm">
+          <div
+            key={career._id.toString()}
+            className="rounded-3xl bg-white p-6 shadow-sm"
+          >
             <form action={updateCareer} className="grid gap-4">
               <input type="hidden" name="id" value={career._id.toString()} />
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-semibold text-navy-900">Title</label>
-                  <input name="title" defaultValue={career.title} className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+                  <label className="text-xs font-semibold text-navy-900">
+                    Title
+                  </label>
+                  <input
+                    name="title"
+                    defaultValue={career.title}
+                    placeholder="Job title"
+                    className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-semibold text-navy-900">Location</label>
-                  <input name="location" defaultValue={career.location} className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+                  <label className="text-xs font-semibold text-navy-900">
+                    Location
+                  </label>
+                  <input
+                    name="location"
+                    defaultValue={career.location}
+                    placeholder="Location"
+                    className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+                  />
                 </div>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-semibold text-navy-900">Type</label>
-                  <input name="type" defaultValue={career.type} className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+                  <label className="text-xs font-semibold text-navy-900">
+                    Type
+                  </label>
+                  <input
+                    name="type"
+                    defaultValue={career.type}
+                    placeholder="Full-time, part-time, etc."
+                    className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-semibold text-navy-900">Experience</label>
-                  <input name="experience" defaultValue={career.experience} className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+                  <label className="text-xs font-semibold text-navy-900">
+                    Experience
+                  </label>
+                  <input
+                    name="experience"
+                    defaultValue={career.experience}
+                    placeholder="Years of experience"
+                    className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-semibold text-navy-900">Description</label>
-                <textarea name="description" rows={3} defaultValue={career.description} className="rounded-xl border border-slate-200 px-4 py-3 text-sm" />
+                <label className="text-xs font-semibold text-navy-900">
+                  Description
+                </label>
+                <textarea
+                  name="description"
+                  rows={3}
+                  defaultValue={career.description}
+                  placeholder="Short job description"
+                  className="rounded-xl border border-slate-200 px-4 py-3 text-sm"
+                />
               </div>
-              <button type="submit" className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory">
+              <AdminSubmitButton
+                className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+                pendingLabel="Saving..."
+                successLabel="Job opening updated."
+              >
                 Save Changes
-              </button>
+              </AdminSubmitButton>
             </form>
 
             <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50 p-4">
@@ -102,13 +185,25 @@ export default async function AdminCareersPage() {
               </div>
               <div className="mt-3 grid gap-3">
                 {((career.applications ?? []) as Application[]).map((app) => (
-                  <div key={app._id.toString()} className="rounded-xl border border-white/70 bg-white p-3 text-xs text-slate-600">
-                    <div className="font-semibold text-navy-900">{app.name}</div>
+                  <div
+                    key={app._id.toString()}
+                    className="rounded-xl border border-white/70 bg-white p-3 text-xs text-slate-600"
+                  >
+                    <div className="font-semibold text-navy-900">
+                      {app.name}
+                    </div>
                     <div>Email: {app.email}</div>
                     {app.phone ? <div>Phone: {app.phone}</div> : null}
                     {app.resumeUrl ? (
                       <div>
-                        Resume: <a href={app.resumeUrl} target="_blank" rel="noreferrer">{app.resumeUrl}</a>
+                        Resume:{" "}
+                        <a
+                          href={app.resumeUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {app.resumeUrl}
+                        </a>
                       </div>
                     ) : null}
                     {app.message ? <div>Message: {app.message}</div> : null}
@@ -122,12 +217,14 @@ export default async function AdminCareersPage() {
               </div>
             </div>
 
-            <form action={deleteCareer} className="mt-4">
-              <input type="hidden" name="id" value={career._id.toString()} />
-              <button type="submit" className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600">
-                Delete Job Opening
-              </button>
-            </form>
+            <AdminDeleteForm
+              action={deleteCareer}
+              id={career._id.toString()}
+              buttonLabel="Delete Job Opening"
+              pendingLabel="Deleting..."
+              successLabel="Job opening deleted."
+              className="mt-4"
+            />
           </div>
         ))}
         {careers.length === 0 ? (

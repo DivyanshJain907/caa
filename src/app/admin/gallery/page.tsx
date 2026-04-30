@@ -7,6 +7,8 @@ import {
 import { dbConnect } from "@/lib/db";
 import GalleryItem from "@/lib/models/GalleryItem";
 import FileUploader from "@/components/ui/FileUploader";
+import AdminSubmitButton from "@/components/admin/AdminSubmitButton";
+import AdminDeleteForm from "@/components/admin/AdminDeleteForm";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +30,6 @@ export default async function AdminGalleryPage() {
 
       <form
         action={createGalleryItem}
-        encType="multipart/form-data"
         className="grid gap-4 rounded-3xl bg-white p-6 shadow-sm"
       >
         <div className="grid gap-4 md:grid-cols-2">
@@ -48,12 +49,13 @@ export default async function AdminGalleryPage() {
           </label>
           <FileUploader name="image" />
         </div>
-        <button
-          type="submit"
-          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+        <AdminSubmitButton
+          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+          pendingLabel="Adding..."
+          successLabel="Gallery item added."
         >
           Add Gallery Item
-        </button>
+        </AdminSubmitButton>
       </form>
 
       <div className="grid gap-6">
@@ -68,11 +70,7 @@ export default async function AdminGalleryPage() {
                 alt={item.title}
                 className="h-28 w-36 rounded-2xl object-cover"
               />
-              <form
-                action={updateGalleryItem}
-                encType="multipart/form-data"
-                className="grid flex-1 gap-4"
-              >
+              <form action={updateGalleryItem} className="grid flex-1 gap-4">
                 <input type="hidden" name="id" value={item._id.toString()} />
                 <div className="flex flex-col gap-2">
                   <label className="text-xs font-semibold text-navy-900">
@@ -105,23 +103,23 @@ export default async function AdminGalleryPage() {
                     <FileUploader name="image" />
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+                <AdminSubmitButton
+                  className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+                  pendingLabel="Saving..."
+                  successLabel="Gallery item updated."
                 >
                   Save Changes
-                </button>
+                </AdminSubmitButton>
               </form>
             </div>
-            <form action={deleteGalleryItem} className="mt-4">
-              <input type="hidden" name="id" value={item._id.toString()} />
-              <button
-                type="submit"
-                className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600"
-              >
-                Delete Item
-              </button>
-            </form>
+            <AdminDeleteForm
+              action={deleteGalleryItem}
+              id={item._id.toString()}
+              buttonLabel="Delete Item"
+              pendingLabel="Deleting..."
+              successLabel="Gallery item deleted."
+              className="mt-4"
+            />
           </div>
         ))}
         {gallery.length === 0 ? (

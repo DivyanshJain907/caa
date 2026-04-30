@@ -1,18 +1,23 @@
 import { deleteContact, requireAdmin } from "@/app/admin/actions";
 import { dbConnect } from "@/lib/db";
 import Contact from "@/lib/models/Contact";
+import AdminDeleteForm from "@/components/admin/AdminDeleteForm";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminContactsPage() {
   await requireAdmin();
   await dbConnect();
-  const contacts = (await Contact.find().sort({ createdAt: -1 }).lean()) as any[];
+  const contacts = (await Contact.find()
+    .sort({ createdAt: -1 })
+    .lean()) as any[];
 
   return (
     <div className="grid gap-8">
       <div className="rounded-3xl bg-white p-6 shadow-sm">
-        <div className="text-sm font-semibold text-navy-900">Contact Requests</div>
+        <div className="text-sm font-semibold text-navy-900">
+          Contact Requests
+        </div>
         <p className="mt-2 text-sm text-slate-600">
           Review new inquiries submitted through the contact form.
         </p>
@@ -20,7 +25,10 @@ export default async function AdminContactsPage() {
 
       <div className="grid gap-6">
         {contacts.map((contact) => (
-          <div key={contact._id.toString()} className="rounded-3xl bg-white p-6 shadow-sm">
+          <div
+            key={contact._id.toString()}
+            className="rounded-3xl bg-white p-6 shadow-sm"
+          >
             <div className="flex flex-col gap-2">
               <div className="text-sm font-semibold text-navy-900">
                 {contact.name}
@@ -36,12 +44,14 @@ export default async function AdminContactsPage() {
               ) : null}
               <p className="text-sm text-slate-600">{contact.message}</p>
             </div>
-            <form action={deleteContact} className="mt-4">
-              <input type="hidden" name="id" value={contact._id.toString()} />
-              <button type="submit" className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600">
-                Delete Inquiry
-              </button>
-            </form>
+            <AdminDeleteForm
+              action={deleteContact}
+              id={contact._id.toString()}
+              buttonLabel="Delete Inquiry"
+              pendingLabel="Deleting..."
+              successLabel="Inquiry deleted."
+              className="mt-4"
+            />
           </div>
         ))}
         {contacts.length === 0 ? (

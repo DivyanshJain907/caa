@@ -7,6 +7,8 @@ import {
 import { dbConnect } from "@/lib/db";
 import Certificate from "@/lib/models/Certificate";
 import FileUploader from "@/components/ui/FileUploader";
+import AdminSubmitButton from "@/components/admin/AdminSubmitButton";
+import AdminDeleteForm from "@/components/admin/AdminDeleteForm";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +30,6 @@ export default async function AdminCertificatesPage() {
 
       <form
         action={createCertificate}
-        encType="multipart/form-data"
         className="grid gap-4 rounded-3xl bg-white p-6 shadow-sm"
       >
         <div className="grid gap-4 md:grid-cols-2">
@@ -70,12 +71,13 @@ export default async function AdminCertificatesPage() {
           </label>
           <FileUploader name="image" />
         </div>
-        <button
-          type="submit"
-          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+        <AdminSubmitButton
+          className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+          pendingLabel="Adding..."
+          successLabel="Certificate added."
         >
           Add Certificate
-        </button>
+        </AdminSubmitButton>
       </form>
 
       <div className="grid gap-6">
@@ -90,11 +92,7 @@ export default async function AdminCertificatesPage() {
                 alt={certificate.title}
                 className="h-28 w-36 rounded-2xl object-cover"
               />
-              <form
-                action={updateCertificate}
-                encType="multipart/form-data"
-                className="grid flex-1 gap-4"
-              >
+              <form action={updateCertificate} className="grid flex-1 gap-4">
                 <input
                   type="hidden"
                   name="id"
@@ -155,27 +153,23 @@ export default async function AdminCertificatesPage() {
                   </label>
                   <FileUploader name="image" />
                 </div>
-                <button
-                  type="submit"
-                  className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory"
+                <AdminSubmitButton
+                  className="w-fit rounded-full bg-navy-900 px-5 py-2 text-xs font-semibold text-ivory disabled:opacity-70"
+                  pendingLabel="Saving..."
+                  successLabel="Certificate updated."
                 >
                   Save Changes
-                </button>
+                </AdminSubmitButton>
               </form>
             </div>
-            <form action={deleteCertificate} className="mt-4">
-              <input
-                type="hidden"
-                name="id"
-                value={certificate._id.toString()}
-              />
-              <button
-                type="submit"
-                className="rounded-full border border-red-200 px-4 py-2 text-xs font-semibold text-red-600"
-              >
-                Delete Certificate
-              </button>
-            </form>
+            <AdminDeleteForm
+              action={deleteCertificate}
+              id={certificate._id.toString()}
+              buttonLabel="Delete Certificate"
+              pendingLabel="Deleting..."
+              successLabel="Certificate deleted."
+              className="mt-4"
+            />
           </div>
         ))}
         {certificates.length === 0 ? (

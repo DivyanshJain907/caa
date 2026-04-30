@@ -92,6 +92,7 @@ export async function createTeamMember(formData: FormData) {
   const name = textValue(formData, "name");
   const role = textValue(formData, "role");
   const specialization = textValue(formData, "specialization");
+  const about = textValue(formData, "about");
   const imageUrlField = textValue(formData, "imageUrl");
   const file = formData.get("image") as File | null;
   let imageUrl = imageUrlField;
@@ -104,7 +105,7 @@ export async function createTeamMember(formData: FormData) {
     throw new Error("Missing required fields");
   }
 
-  await TeamMember.create({ name, role, specialization, imageUrl });
+  await TeamMember.create({ name, role, specialization, about, imageUrl });
   revalidatePath("/team");
   revalidatePath("/admin/team");
 }
@@ -117,6 +118,7 @@ export async function updateTeamMember(formData: FormData) {
   const name = textValue(formData, "name");
   const role = textValue(formData, "role");
   const specialization = textValue(formData, "specialization");
+  const about = textValue(formData, "about");
   const imageUrlField = textValue(formData, "imageUrl");
   const file = formData.get("image") as File | null;
   let imageUrl = imageUrlField;
@@ -129,6 +131,7 @@ export async function updateTeamMember(formData: FormData) {
     name,
     role,
     specialization,
+    about,
     imageUrl: imageUrl || undefined,
   });
   revalidatePath("/team");
